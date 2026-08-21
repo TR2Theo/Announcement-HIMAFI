@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aktivasi ATOM 2025</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0b0c10;
+            color: #c5c6c7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+        }
+        .container {
+            background: #1f2833;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(102, 252, 241, 0.2);
+            max-width: 450px;
+            width: 90%;
+            border: 1px solid #45a29e;
+            transition: all 0.5s ease;
+        }
+        h2 { color: #66fcf1; text-transform: uppercase; letter-spacing: 2px;}
+        p { line-height: 1.6; font-size: 15px; }
+        
+        input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid #45a29e;
+            background: #0b0c10;
+            color: #66fcf1;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            box-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+        }
+
+        .btn {
+            background-color: #45a29e;
+            color: #0b0c10;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+        }
+        .btn:hover { 
+            background-color: #66fcf1; 
+            box-shadow: 0 0 15px #66fcf1;
+            transform: scale(1.05); 
+        }
+
+        #card {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(11, 12, 16, 0.8);
+            border-radius: 10px;
+            border-left: 4px solid #66fcf1;
+            animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        .highlight { color: #66fcf1; font-weight: bold; font-size: 18px; }
+        .atom-icon { font-size: 40px; margin-bottom: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="mainContainer">
+    <div id="auth-section">
+        <h2>Sistem Vektorisasi</h2>
+        <p>Otentikasi Identitas Agen HIMAFI</p>
+        <input type="text" id="namaInput" placeholder="Masukkan Nama Panggilanmu..." autocomplete="off">
+        <br>
+        <button class="btn" onclick="revealCard()">Aktivasi Identitas</button>
+    </div>
+
+    <div id="card">
+        <span class="atom-icon">⚛️</span>
+        <h3>AKSES DITERIMA</h3>
+        <p>Selamat bergabung, <br><span class="highlight" id="namaOutput"></span>!</p>
+        <p>Kamu resmi terpilih menjadi 1 dari <b>11 ATOM (Agen Transisi dan Orientasi Mahasiswa)</b>.</p>
+        <p>Tahun ini, kita bergerak sebagai <b>SATU KESATUAN UTUH</b>. Tidak ada lagi sekat pemisah tugas. Kita memikul tanggung jawab yang sama untuk mengikat, membimbing, dan mentransformasi adik-adik <b>QUARK</b> (Angkatan 2026) di bidang akademik maupun non-akademik.</p>
+        <p><em>Persiapkan energimu untuk Welcome Party. Semangat brookk!</em></p>
+    </div>
+</div>
+
+<script>
+    function revealCard() {
+        let nama = document.getElementById("namaInput").value;
+        if(nama.trim() === "") {
+            alert("Harap masukkan namamu terlebih dahulu, Agen!");
+            return;
+        }
+        
+        // Menyembunyikan form input
+        document.getElementById("auth-section").style.display = "none";
+        
+        // Menampilkan nama di kartu
+        document.getElementById("namaOutput").innerText = nama.toUpperCase();
+        
+        // Menampilkan kartu
+        document.getElementById("card").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
