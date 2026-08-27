@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aktivasi ATOM 2025</title>
+    <title>Sistem Verifikasi ATOM 2025</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -33,7 +33,7 @@
         input[type="text"] {
             width: 80%;
             padding: 12px;
-            margin: 20px 0;
+            margin: 15px 0;
             border-radius: 8px;
             border: 1px solid #45a29e;
             background: #0b0c10;
@@ -57,6 +57,7 @@
             cursor: pointer;
             transition: 0.3s;
             text-transform: uppercase;
+            margin-top: 10px;
         }
         .btn:hover { 
             background-color: #66fcf1; 
@@ -64,9 +65,21 @@
             transform: scale(1.05); 
         }
 
+        /* Styling untuk pesan error */
+        #error-msg {
+            display: none;
+            color: #ff4c4c;
+            background: rgba(255, 76, 76, 0.1);
+            border: 1px solid #ff4c4c;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
         #card {
             display: none;
-            margin-top: 20px;
             padding: 20px;
             background: rgba(11, 12, 16, 0.8);
             border-radius: 10px;
@@ -88,9 +101,13 @@
     <div id="auth-section">
         <h2>Sistem Vektorisasi</h2>
         <p>Otentikasi Identitas Agen HIMAFI</p>
+        <p style="font-size: 12px; color: #888;">*Masukkan nama panggilan sesuai data pendaftaran</p>
         <input type="text" id="namaInput" placeholder="Masukkan Nama Panggilanmu..." autocomplete="off">
         <br>
-        <button class="btn" onclick="revealCard()">Aktivasi Identitas</button>
+        <button class="btn" onclick="verifikasiNama()">Aktivasi</button>
+        
+        <!-- Pesan error akan muncul di sini -->
+        <div id="error-msg">⚠️ MAAF, AKSES DITOLAK! Identitas tidak terdaftar sebagai ATOM.</div>
     </div>
 
     <div id="card">
@@ -104,21 +121,55 @@
 </div>
 
 <script>
-    function revealCard() {
-        let nama = document.getElementById("namaInput").value;
-        if(nama.trim() === "") {
-            alert("Harap masukkan namamu terlebih dahulu, Agen!");
+    // MASUKKAN 11 NAMA PANGGILAN MEREKA DI BAWAH INI
+    // Pastikan pakai huruf kecil semua agar sistem tidak bingung saat mengecek
+    const daftarAtomTerpilih = [
+        "ahmad khaidhir nadjid", 
+        "maulana arya farizki",
+        "raden arinda mutiara najwa",
+        "nisa yanti salinding",
+        "ardelia zein",
+        "inges pramoni",
+        "aisyah aurora ayu setianingrum",
+        "nayshila ramadhany",
+        "cahaya meilinda",
+        "nur ramadhani",
+        "koinonia melody seko", 
+    ];
+
+    function verifikasiNama() {
+        // Mengambil input dari user, menghilangkan spasi di awal/akhir, dan mengubahnya jadi huruf kecil
+        let inputUser = document.getElementById("namaInput").value.trim().toLowerCase();
+        let errorMsg = document.getElementById("error-msg");
+
+        if(inputUser === "") {
+            errorMsg.innerHTML = "⚠️ Harap masukkan nama terlebih dahulu!";
+            errorMsg.style.display = "block";
             return;
         }
-        
-        // Menyembunyikan form input
-        document.getElementById("auth-section").style.display = "none";
-        
-        // Menampilkan nama di kartu
-        document.getElementById("namaOutput").innerText = nama.toUpperCase();
-        
-        // Menampilkan kartu
-        document.getElementById("card").style.display = "block";
+
+        // Pengecekan apakah input user ada di dalam daftar 11 nama
+        let isValid = false;
+        for(let i = 0; i < daftarAtomTerpilih.length; i++) {
+            if(inputUser === daftarAtomTerpilih[i]) {
+                isValid = true;
+                break;
+            }
+        }
+
+        if(isValid) {
+            // Jika nama terdaftar: Sembunyikan form login & error, tampilkan kartu
+            document.getElementById("auth-section").style.display = "none";
+            
+            // Menampilkan nama dengan awalan huruf kapital di kartu ucapan
+            document.getElementById("namaOutput").innerText = document.getElementById("namaInput").value.toUpperCase();
+            
+            document.getElementById("card").style.display = "block";
+        } else {
+            // Jika nama TIDAK terdaftar: Tampilkan pesan error
+            errorMsg.innerHTML = "⚠️ MAAF, AKSES DITOLAK!<br>Identitas tidak terdaftar sebagai ATOM.";
+            errorMsg.style.display = "block";
+        }
     }
 </script>
 
